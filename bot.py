@@ -6,6 +6,7 @@ import discord
 import random
 import os
 import time
+import asyncio
 
 intents = discord.Intents.default()
 intents.members = True
@@ -20,6 +21,16 @@ zgdps = 950574511550504962 # esto es noches locas; zgdps = 729104446948376707
 
 texto = "En 1725 se ordenó diácono y tres años después pasó a formar parte del clero de la Iglesia de Inglaterra. En 1729 se trasladó a Oxford como miembro de la junta directora del Lincoln College, donde fundó junto a su hermano Charles el Holy Club, en el que ingresó también George Whitefield, futuro fundador del metodismo calvinista.\n\nEn 1735 se traslada a Estados Unidos como misionero anglicano y en el viaje conoce a unos alemanes de Moravia cuya sencilla devoción evangélica le impresionó. Durante su estancia en Georgia siguió tratándolos y tradujo algunos de sus himnos al inglés. Regresó a su país en 1738 y el 24 de mayo, mientras esperaba un encuentro con los moravos en la calle Aldersgate, en Londres, experimentó un despertar religioso que le convenció de que cualquier persona podía alcanzar la salvación sólo con tener fe en Jesucristo.\n\nEn marzo de 1739, George Whitefield, entonces famoso predicador en Bristol, lo llamó para que unieran sus esfuerzos. En un principio se negó a predicar fuera de las iglesias, pero la entusiasta reacción de la audiencia tras el sermón que pronunció el 2 de abril al aire libre lo convenció de que era la forma más efectiva de llegar a las masas."
 
+async def limitar_pings():
+    # pings 1 minuto, 4 minutos descanso, todo para evitar el timeout de discord
+    global pingueando
+
+    pingueando = True
+    await asyncio.sleep(60)
+
+    pingueando = False
+    await asyncio.sleep(60 * 4)
+
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="la Preqle"))
@@ -29,22 +40,12 @@ async def on_ready():
     # await a.add_roles(g.get_role(848619343956934677))
 
     print('Bot is ready')
-    h = limitar_pings() # no uso h
-
-async def limitar_pings():
-    # pings 1 minuto, 4 minutos descanso, todo para evitar el timeout de discord
-    global pingueando
-
-    pingueando = True
-    h = on_message() # no uso h
-    time.sleep(60)
-
-    pingueando = False
-    time.sleep(60 * 4)
 
 @bot.event
 async def on_message(ctx: Optional[commands.Context] = None):
     global pingueando
+
+    print(pingueando)
 
     if not pingueando: return
 
@@ -59,10 +60,9 @@ async def on_message(ctx: Optional[commands.Context] = None):
         except BaseException:
             continue
 
-    zgdps = bot.get_guild(zgdps)
-    if not zgdps: return
-    
-    zgdps_channels = zgdps.channels
+    zgdps_server = bot.get_guild(zgdps)
+    if not zgdps_server: return
+    zgdps_channels = zgdps_server.channels
     text_channels = [c for c in zgdps_channels if isinstance(c, TextChannel)]
 
     channel = random.choice(text_channels)
@@ -89,3 +89,8 @@ async def on_message(ctx: Optional[commands.Context] = None):
     # todo este codigo ha sido quitado para poder facilitar pings
 
 bot.run(os.environ['BOT_TOKEN'])
+
+while True:
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(limitar_pings())
+    loop.close()
