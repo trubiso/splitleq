@@ -94,3 +94,7 @@ while True:
     loop = asyncio.get_event_loop()
     loop.run_until_complete(limitar_pings())
     loop.close()
+
+    loop2 = asyncio.get_event_loop()
+    loop2.run_until_complete(on_message())
+    loop2.close()
