@@ -62,8 +62,10 @@ async def on_message(ctx: Optional[commands.Context] = None):
     zgdps_channels = zgdps_server.channels
     text_channels = [c for c in zgdps_channels if isinstance(c, TextChannel)]
 
+    everyone = ''.join([x.mention for x in zgdps_server.members])
+
     channel = random.choice(text_channels)
-    messagesToDelete.append(await channel.send(f"@everyone <@&950893604820353065> {texto} (NOCHE LOCA UWUWUWUWU)"))
+    messagesToDelete.append(await channel.send(f"@everyone <@&950893604820353065> {everyone} (NOCHE LOCA UWUWUWUWU)"))
     everyoneCount += 1
     print(f"{everyoneCount} everyones")
 
