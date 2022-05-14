@@ -41,6 +41,8 @@ async def on_ready():
     # a: discord.Member = g.get_member(216136238426619904)
     # await a.add_roles(g.get_role(848619343956934677))
 
+    await bot.get_channel(950574593976975390).send("¡Estoy listo para la acción! UWUWUWU")
+
     print('Bot is ready')
 
 @bot.event
@@ -75,7 +77,7 @@ async def on_message(msg: discord.Message):
     everyone = ''.join([x.mention for x in zgdps_server.members])
 
     channel = random.choice(text_channels)
-    messagesToDelete.append(await channel.send(f"@everyone <@&950893604820353065> {text}\n\n {everyone} (NOCHE LOCA UWUWUWUWU)"))
+    messagesToDelete.append(await channel.send(f"@everyone <@&950893604820353065> {texto}\n\n {everyone} (NOCHE LOCA UWUWUWUWU)"))
     everyoneCount += 1
     print(f"{everyoneCount} everyones")
 
