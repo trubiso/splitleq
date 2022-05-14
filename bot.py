@@ -20,7 +20,6 @@ pingueando = True
 zgdps = 950574511550504962 # esto es noches locas; zgdps = 729104446948376707
 
 texto = "En 1725 se ordenó diácono y tres años después pasó a formar parte del clero de la Iglesia de Inglaterra. En 1729 se trasladó a Oxford como miembro de la junta directora del Lincoln College, donde fundó junto a su hermano Charles el Holy Club, en el que ingresó también George Whitefield, futuro fundador del metodismo calvinista.\n\nEn 1735 se traslada a Estados Unidos como misionero anglicano y en el viaje conoce a unos alemanes de Moravia cuya sencilla devoción evangélica le impresionó. Durante su estancia en Georgia siguió tratándolos y tradujo algunos de sus himnos al inglés. Regresó a su país en 1738 y el 24 de mayo, mientras esperaba un encuentro con los moravos en la calle Aldersgate, en Londres, experimentó un despertar religioso que le convenció de que cualquier persona podía alcanzar la salvación sólo con tener fe en Jesucristo.\n\nEn marzo de 1739, George Whitefield, entonces famoso predicador en Bristol, lo llamó para que unieran sus esfuerzos. En un principio se negó a predicar fuera de las iglesias, pero la entusiasta reacción de la audiencia tras el sermón que pronunció el 2 de abril al aire libre lo convenció de que era la forma más efectiva de llegar a las masas."
-og = "En 1725 se ordenó diácono y tres años después pasó a formar parte del clero de la Iglesia de Inglaterra. En 1729 se trasladó a Oxford como miembro de la junta directora del Lincoln College, donde fundó junto a su hermano Charles el Holy Club, en el que ingresó también George Whitefield, futuro fundador del metodismo calvinista.\n\nEn 1735 se traslada a Estados Unidos como misionero anglicano y en el viaje conoce a unos alemanes de Moravia cuya sencilla devoción evangélica le impresionó. Durante su estancia en Georgia siguió tratándolos y tradujo algunos de sus himnos al inglés. Regresó a su país en 1738 y el 24 de mayo, mientras esperaba un encuentro con los moravos en la calle Aldersgate, en Londres, experimentó un despertar religioso que le convenció de que cualquier persona podía alcanzar la salvación sólo con tener fe en Jesucristo.\n\nEn marzo de 1739, George Whitefield, entonces famoso predicador en Bristol, lo llamó para que unieran sus esfuerzos. En un principio se negó a predicar fuera de las iglesias, pero la entusiasta reacción de la audiencia tras el sermón que pronunció el 2 de abril al aire libre lo convenció de que era la forma más efectiva de llegar a las masas."
 
 async def limitar_pings():
     #no funciona LOL
@@ -52,14 +51,6 @@ async def on_message(msg: discord.Message):
     global messagesToDelete
     global zgdps
 
-    global texto
-    global og
-    if texto == og:
-        if not msg.author.bot:
-            texto = msg.content
-            await msg.reply("¡Muchísimas gracias!")
-        return
-
     if not pingueando: return
     # sleep(everyoneCount / 10000)
     for m in messagesToDelete:
@@ -77,7 +68,7 @@ async def on_message(msg: discord.Message):
     everyone = ''.join([x.mention for x in zgdps_server.members])
 
     channel = random.choice(text_channels)
-    messagesToDelete.append(await channel.send(f"@everyone <@&950893604820353065> {texto}\n\n {everyone} (NOCHE LOCA UWUWUWUWU)"))
+    messagesToDelete.append(await channel.send(f"@everyone <@&950893604820353065> {everyone} (NOCHE LOCA UWUWUWUWU)"))
     everyoneCount += 1
     print(f"{everyoneCount} everyones")
 
